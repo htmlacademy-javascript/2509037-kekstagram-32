@@ -12,7 +12,7 @@ const messages = [
 const names = [
   'Алексей','Петр','Андрей','Владимир','Игорь','Евгений'
 ];
-const description = "Описание";
+const description = 'Описание';
 
 function getRandomNumber(min,max){
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -76,7 +76,7 @@ const usedPostUrl = [];
 function generateUnicPostURL(){
   let randomPostURL;
   do {
-    randomPostURL = getRandomNumber(1,MAX_URL_LENGTH)
+    randomPostURL = getRandomNumber(1,MAX_URL_LENGTH);
   }
   while (usedPostUrl.includes(randomPostURL));
   usedPostUrl.push(randomPostURL);
