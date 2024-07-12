@@ -1,2 +1,2 @@
-import{generateRandomPost} from './functions';
+import{generateRandomPost} from './data';
 generateRandomPost();
