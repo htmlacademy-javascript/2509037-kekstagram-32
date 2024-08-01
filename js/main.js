@@ -1,2 +1,2 @@
-import{generateRandomPost} from './data';
-generateRandomPost();
+import{renderThumbnails} from './thumbnails.js';
+renderThumbnails();
