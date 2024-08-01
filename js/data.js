@@ -1,6 +1,9 @@
-const MAX_ID_LENGTH = 25;
-const MAX_URL_LENGTH = 25;
-const MAX_AVATAR_LENGTH = 6;
+import {getRandomInteger} from './util.js';
+
+const AVATAR_MAX_NUMBER = 6;
+const MAX_COMMENTS_AMOUNT = 30;
+const MAX_DATA_ARRAY_LENGTH = 25;
+
 const messages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -9,84 +12,53 @@ const messages = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+
 const names = [
-  'Алексей','Петр','Андрей','Владимир','Игорь','Евгений'
+  'Эмир',
+  'Тимофей',
+  'Андрей',
+  'Макар',
+  'Тимур',
+  'Артур',
+  'Александр',
+  'Марк',
+  'Артём',
+  'Даниил',
 ];
-const description = 'Описание';
 
-const usedID = [];
-const usedPostId = [];
-const usedPostUrl = [];
-function getRandomNumber(min,max){
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function generateUnicId(){
-  let randomId;
-  do {
-    randomId = getRandomNumber(1,MAX_ID_LENGTH);
-  }
-  while (usedID.includes(randomId));
-  usedID.push(randomId);
-  return randomId;
-}
-
-function genrateRandomAvatarUrl () {
-  const randomAvatar = getRandomNumber(1,MAX_AVATAR_LENGTH);
-  return `img/avatar-${randomAvatar}.svg`;
-}
-
-function getRandomString (array){
-  const randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-}
-
-function generateCommentsArray(){
-  const commentsNum = getRandomNumber(0,30);
+function getRandomCommentsArray(min, max) {
   const commentsArray = [];
-
-  for(let i = 0; i <= commentsNum; i++){
-    commentsArray.push(getRandomComment());
+  const randomCommentsAmount = getRandomInteger(min, max);
+  for (let i = 1; i <= randomCommentsAmount; i ++){
+    const avatarId = getRandomInteger(1, AVATAR_MAX_NUMBER);
+    const randomMessage = messages[getRandomInteger(0, messages.length - 1)];
+    const randomName = names[getRandomInteger(0, names.length - 1)];
+    const newObject = {
+      id: i,
+      avatar: `img/avatar-${avatarId}.svg`,
+      message: randomMessage,
+      name: randomName,
+    };
+    commentsArray.push(newObject);
   }
   return commentsArray;
 }
 
-function getRandomComment() {
-  return {
-    id:generateUnicId(),
-    avatar: genrateRandomAvatarUrl(),
-    message: getRandomString(messages),
-    name: getRandomString(names),
-  };
-}
-
-function generateUnicPostId(){
-  let randomPostId;
-  do {
-    randomPostId = getRandomNumber(1,MAX_ID_LENGTH);
+function createDataArray(arrayLength = MAX_DATA_ARRAY_LENGTH) {
+  const dataArray = [];
+  for(let i = 1; i <= arrayLength; i++) {
+    const randomCommentsAmount = getRandomCommentsArray(0, MAX_COMMENTS_AMOUNT);
+    const randomLikesNumber = getRandomInteger(15, 200);
+    const newObject = {
+      id: i,
+      url: `photos/${i}.jpg`,
+      description: `Описание № ${i}`,
+      likes: randomLikesNumber,
+      comments: randomCommentsAmount
+    };
+    dataArray.push(newObject);
   }
-  while (usedPostId.includes(randomPostId));
-  usedPostId.push(randomPostId);
-  return randomPostId;
+  return dataArray;
 }
 
-function generateUnicPostURL(){
-  let randomPostURL;
-  do {
-    randomPostURL = getRandomNumber(1,MAX_URL_LENGTH);
-  }
-  while (usedPostUrl.includes(randomPostURL));
-  usedPostUrl.push(randomPostURL);
-  return `photos/${randomPostURL}.jpg`;
-}
-
-function generateRandomPost() {
-  return {
-    id:generateUnicPostId(),
-    url:generateUnicPostURL(),
-    description:description,
-    likes:getRandomNumber(15,200),
-    comments:generateCommentsArray(),
-  };
-}
-export {generateRandomPost};
+export{createDataArray};

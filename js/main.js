@@ -1,2 +1,2 @@
-import{generateRandomPost} from './functions';
-generateRandomPost();
+import{renderThumbnails} from './thumbnails.js';
+renderThumbnails();
