@@ -16,4 +16,3 @@ function meetingInWorkingHours (startTime, endTime, meetingStart, meetingDuratio
 
 }
 meetingInWorkingHours();
-
